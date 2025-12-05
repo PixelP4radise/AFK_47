@@ -2,7 +2,9 @@ package pt.codered.afk_47;
 
 import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
+import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.text.Text;
+import pt.codered.afk_47.model.fsm.AFKContext;
 import pt.codered.afk_47.util.ModLogger;
 
 public class AFKManager {
@@ -10,20 +12,26 @@ public class AFKManager {
     // Singleton Instance
     private static final AFKManager INSTANCE = new AFKManager();
 
-    // State variables (Example)
-    private boolean isBotActive = false;
-
-    private AFKManager() {
-        // Private constructor to enforce Singleton
-    }
-
     public static AFKManager getInstance() {
         return INSTANCE;
     }
 
+    private AFKContext context;
+
+
+    private AFKManager() {
+        this.context = new AFKContext();
+    }
+
+
     public void init() {
         ModLogger.info("AFKManager initialized.");
-        // Place to initialize Baritone settings or event listeners later
+
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            if (client.player != null && client.world != null) {
+                context.tick();
+            }
+        });
     }
 
     public void testCommand(CommandContext<FabricClientCommandSource> context) {
