@@ -21,6 +21,8 @@ repositories {
         name = "Babbaj Maven"
         url = "https://babbaj.github.io/maven/"
     }
+
+    maven { url 'https://pkgs.dev.azure.com/djtheredstoner/DevAuth/_packaging/public/maven/v1' }
 }
 
 loom {
@@ -30,6 +32,20 @@ loom {
         "afk_47" {
             sourceSet sourceSets.main
             sourceSet sourceSets.client
+        }
+    }
+
+    runs {
+        client {
+            client()
+            configName = "Minecraft Client"
+            vmArgs "-Ddevauth.enabled=true", "-Ddevauth.account=main"
+        }
+
+        clientSafe {
+            client()
+            configName = "Minecraft Client (Safe/Alt)"
+            vmArgs "-Ddevauth.enabled=true", "-Ddevauth.account=alt"
         }
     }
 
@@ -47,6 +63,8 @@ dependencies {
     modImplementation files("libs/baritone-api-fabric-1.14.0.jar")
 
     modImplementation("dev.babbaj:nether-pathfinder:1.5")
+
+    modRuntimeOnly "me.djtheredstoner:DevAuth-fabric:1.2.1"
 }
 
 processResources {
