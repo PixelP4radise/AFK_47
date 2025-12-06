@@ -6,8 +6,17 @@ import pt.codered.afk_47.model.fsm.AFKState;
 import pt.codered.afk_47.model.fsm.AFKStateAdapter;
 
 public class FishingState extends AFKStateAdapter {
+
     public FishingState(AFKContext context, AFKData data) {
         super(context, data);
+    }
+
+    private enum FishingSubState {
+        CASTING,
+        WAITING,
+        REELING,
+        IDLE_AFTER_FISHING,
+        COMBAT,
     }
 
     @Override
