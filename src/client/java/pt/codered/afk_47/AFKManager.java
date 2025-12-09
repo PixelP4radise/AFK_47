@@ -4,7 +4,6 @@ import com.mojang.brigadier.context.CommandContext;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.minecraft.text.Text;
-import pt.codered.afk_47.model.data.AFKData;
 import pt.codered.afk_47.model.fsm.AFKFSMContext;
 import pt.codered.afk_47.util.ModLogger;
 
@@ -19,11 +18,8 @@ public class AFKManager {
 
     private AFKFSMContext FSMcontext;
 
-    private AFKData data;
-
     private AFKManager() {
         this.FSMcontext = new AFKFSMContext();
-        this.data = new AFKData();
     }
 
 
