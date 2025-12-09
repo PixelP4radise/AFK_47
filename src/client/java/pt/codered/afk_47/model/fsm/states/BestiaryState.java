@@ -1,12 +1,12 @@
 package pt.codered.afk_47.model.fsm.states;
 
 import pt.codered.afk_47.model.data.AFKData;
-import pt.codered.afk_47.model.fsm.AFKContext;
+import pt.codered.afk_47.model.fsm.AFKFSMContext;
 import pt.codered.afk_47.model.fsm.AFKState;
 import pt.codered.afk_47.model.fsm.AFKStateAdapter;
 
 public class BestiaryState extends AFKStateAdapter {
-    public BestiaryState(AFKContext context, AFKData data) {
+    public BestiaryState(AFKFSMContext context, AFKData data) {
         super(context, data);
     }
 

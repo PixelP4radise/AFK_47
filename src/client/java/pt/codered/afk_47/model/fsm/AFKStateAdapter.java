@@ -4,10 +4,10 @@ import pt.codered.afk_47.model.data.AFKData;
 import pt.codered.afk_47.model.fsm.states.*;
 
 public abstract class AFKStateAdapter implements IAFKState {
-    protected AFKContext context;
+    protected AFKFSMContext context;
     protected AFKData data;
 
-    protected AFKStateAdapter(AFKContext context, AFKData data) {
+    protected AFKStateAdapter(AFKFSMContext context, AFKData data) {
         this.context = context;
         this.data = data;
     }

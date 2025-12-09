@@ -3,11 +3,11 @@ package pt.codered.afk_47.model.fsm;
 import pt.codered.afk_47.model.data.AFKData;
 import pt.codered.afk_47.model.fsm.states.IdleState;
 
-public class AFKContext {
+public class AFKFSMContext {
     private AFKData data;
     private IAFKState state;
 
-    public AFKContext() {
+    public AFKFSMContext() {
         this.data = new AFKData();
         this.state = new IdleState(this, data);
     }
