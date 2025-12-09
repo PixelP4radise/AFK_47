@@ -8,6 +8,50 @@ public final class FishingMessages {
 
     // ||||||||||||||||||||||||||||||||||||||||||||
     // ||                                        ||
+    // ||           LOGIC & AUTOMATION           ||
+    // ||                                        ||
+    // ||||||||||||||||||||||||||||||||||||||||||||
+
+    private static final java.util.List<SeaCreature> ALL_CREATURES = new java.util.ArrayList<>();
+
+    // This static block runs ONCE when the game starts.
+    // It automatically finds every 'SeaCreature' variable in this class and adds it to the list.
+    static {
+        try {
+            for (java.lang.reflect.Field field : FishingMessages.class.getFields()) {
+                // Check if the variable is a SeaCreature
+                if (field.getType() == SeaCreature.class) {
+                    // Get the value (null because it's static) and add to list
+                    SeaCreature creature = (SeaCreature) field.get(null);
+                    ALL_CREATURES.add(creature);
+                }
+            }
+        } catch (IllegalAccessException e) {
+            pt.codered.afk_47.util.ModLogger.error("Failed to load Sea Creatures list!", e);
+        }
+    }
+
+    /**
+     * @return The complete catalog of every defined Sea Creature.
+     */
+    public static java.util.List<SeaCreature> getAll() {
+        return java.util.Collections.unmodifiableList(ALL_CREATURES);
+    }
+
+    /**
+     * Filters the catalog to find which mobs can spawn RIGHT NOW.
+     * Useful for overlays or debug.
+     */
+    public static java.util.List<SeaCreature> getAvailableMobs(net.minecraft.client.MinecraftClient client) {
+        if (client.player == null || client.world == null) return java.util.Collections.emptyList();
+
+        return ALL_CREATURES.stream()
+                .filter(creature -> creature.spawnCondition().test(client)) //todo: ter a certeza que o client passa todas as informações necessárias
+                .toList(); // Java 16+ method (Fabric 1.21 uses Java 21)
+    }
+
+    // ||||||||||||||||||||||||||||||||||||||||||||
+    // ||                                        ||
     // ||            WATER CREATURES             ||
     // ||                                        ||
     // ||||||||||||||||||||||||||||||||||||||||||||
