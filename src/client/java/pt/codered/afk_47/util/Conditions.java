@@ -56,4 +56,7 @@ public class Conditions {
             return false;
         };
     }
+
+    //todo: add condition for chumcap bucket
+
 }
