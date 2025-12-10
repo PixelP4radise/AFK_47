@@ -8,6 +8,8 @@ import pt.codered.afk_47.model.fsm.AFKStateAdapter;
 public class ForagingState extends AFKStateAdapter {
     private ForagingSubState subState = ForagingSubState.DECIDING_TARGET;
 
+    private int statetimer = 0;
+
     public ForagingState(AFKFSMContext context, AFKData data) {
         super(context, data);
     }
@@ -21,6 +23,11 @@ public class ForagingState extends AFKStateAdapter {
 
     @Override
     public void tick() {
+        if (statetimer > 0) {
+            statetimer--;
+            return;
+        }
+
         switch (subState) {
             case DECIDING_TARGET -> {
             }
