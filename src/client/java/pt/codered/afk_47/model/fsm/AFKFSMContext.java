@@ -31,4 +31,8 @@ public class AFKFSMContext {
     public boolean startForaging() {
         return state.startForaging();
     }
+
+    public boolean stop() {
+        return state.stop();
+    }
 }

@@ -65,10 +65,13 @@ public abstract class AFKStateAdapter implements IAFKState {
 
     protected void updateRotation() {
         if (!lookController.isFinished()) {
-            // Suppress Baritone
-            BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().updateTarget(null, true);
+            var look = BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior();
 
-            // Apply Human Rotation
+            // A safe “cancel look” replacement
+            look.updateTarget(
+                    new baritone.api.utils.Rotation(mc.player.getYaw(), mc.player.getPitch()),
+                    true
+            );
             lookController.update();
         }
     }

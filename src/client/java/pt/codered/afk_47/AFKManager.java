@@ -37,6 +37,10 @@ public class AFKManager {
         return FSMcontext.startForaging();
     }
 
+    public boolean stop() {
+        return FSMcontext.stop();
+    }
+
     public void testCommand(CommandContext<FabricClientCommandSource> context) {
         context.getSource().sendFeedback(Text.literal("§aAFK_47 Client is working!"));
     }
