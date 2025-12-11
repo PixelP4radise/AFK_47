@@ -1,13 +1,16 @@
 package pt.codered.afk_47.model.fsm;
 
+import baritone.api.BaritoneAPI;
 import net.minecraft.client.MinecraftClient;
 import pt.codered.afk_47.model.data.AFKData;
 import pt.codered.afk_47.model.fsm.states.*;
+import pt.codered.afk_47.util.HumanLookController;
 
 public abstract class AFKStateAdapter implements IAFKState {
     protected AFKFSMContext context;
     protected AFKData data;
     protected final MinecraftClient mc = MinecraftClient.getInstance();
+    protected final HumanLookController lookController = new HumanLookController();
 
     protected AFKStateAdapter(AFKFSMContext context, AFKData data) {
         this.context = context;
@@ -58,5 +61,15 @@ public abstract class AFKStateAdapter implements IAFKState {
     public boolean startForaging() {
         changeState(new ForagingState(context, data));
         return true;
+    }
+
+    protected void updateRotation() {
+        if (!lookController.isFinished()) {
+            // Suppress Baritone
+            BaritoneAPI.getProvider().getPrimaryBaritone().getLookBehavior().updateTarget(null, true);
+
+            // Apply Human Rotation
+            lookController.update();
+        }
     }
 }
