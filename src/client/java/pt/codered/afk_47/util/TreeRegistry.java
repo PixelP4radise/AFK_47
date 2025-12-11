@@ -9,7 +9,12 @@ public class TreeRegistry {
 
     public static final List<Island> ISLANDS = new ArrayList<>();
 
-//    static {
+    private TreeRegistry() {
+    }
+
+    static {
+    }
+
 //        //fazer arvores
 //
 //        //fazer regioes
@@ -19,5 +24,4 @@ public class TreeRegistry {
 //        //fazer ilhas
 //
 //        //adicionar regioes as ilhas
-//    }
 }

@@ -1,12 +1,12 @@
 package pt.codered.afk_47;
 
 import net.fabricmc.api.ClientModInitializer;
-import net.fabricmc.fabric.api.client.command.v2.ClientCommandManager;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.message.v1.ClientReceiveMessageEvents;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.render.VertexConsumerProvider;
+import net.minecraft.text.Text;
 import pt.codered.afk_47.model.data.TreePosition;
 import pt.codered.afk_47.util.BoxRenderer;
 import pt.codered.afk_47.util.ModLogger;
@@ -14,6 +14,8 @@ import pt.codered.afk_47.util.TreeRecorder;
 
 import java.awt.*;
 import java.util.List;
+
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public class AFK_47Client implements ClientModInitializer {
     @Override
@@ -36,11 +38,35 @@ public class AFK_47Client implements ClientModInitializer {
 
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, dedicated) -> {
 
-            dispatcher.register(ClientCommandManager.literal("afktest")
+            dispatcher.register(literal("afktest")
                     .executes(context -> {
                         AFKManager.getInstance().testCommand(context);
                         return 1;
                     })
+            );
+
+            dispatcher.register(
+                    literal("afk")
+                            // Sub-command: /afk fishing
+                            .then(literal("fishing")
+                                    .executes(context -> {
+                                        return 1;
+                                    })
+                            )
+                            // Sub-command: /afk foraging
+                            .then(literal("foraging")
+                                    .executes(context -> {
+                                        context.getSource().sendFeedback(Text.of("§aStarting Foraging Bot..."));
+                                        AFKManager.getInstance().startForaging();
+                                        return 1;
+                                    })
+                            )
+                            // Sub-command: /afk stop
+                            .then(literal("stop")
+                                    .executes(context -> {
+                                        return 1;
+                                    })
+                            )
             );
         });
     }

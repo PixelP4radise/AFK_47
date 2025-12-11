@@ -1,11 +1,13 @@
 package pt.codered.afk_47.model.fsm;
 
+import net.minecraft.client.MinecraftClient;
 import pt.codered.afk_47.model.data.AFKData;
 import pt.codered.afk_47.model.fsm.states.*;
 
 public abstract class AFKStateAdapter implements IAFKState {
     protected AFKFSMContext context;
     protected AFKData data;
+    protected final MinecraftClient mc = MinecraftClient.getInstance();
 
     protected AFKStateAdapter(AFKFSMContext context, AFKData data) {
         this.context = context;

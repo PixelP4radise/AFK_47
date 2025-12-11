@@ -28,4 +28,7 @@ public class AFKFSMContext {
 
 
     //Transitions methods
+    public boolean startForaging() {
+        return state.startForaging();
+    }
 }
